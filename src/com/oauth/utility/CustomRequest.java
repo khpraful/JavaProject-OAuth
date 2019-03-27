@@ -1,4 +1,4 @@
-package com.oauth.filter;
+package com.oauth.utility;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -2,12 +2,20 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>Authentication</display-name>
   <filter>
-    <filter-name>filter</filter-name>
-    <filter-class>com.oauth.filter.RequestFilter</filter-class>
+    <filter-name>AuthenticationFilter</filter-name>
+    <filter-class>com.oauth.filter.AuthenticationFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>filter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <filter-name>AuthenticationFilter</filter-name>
+    <url-pattern>/getEmployee</url-pattern>
+  </filter-mapping>
+   <filter>
+    <filter-name>TokenFilter</filter-name>
+    <filter-class>com.oauth.filter.TokenFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>TokenFilter</filter-name>
+    <url-pattern>/getEmployee</url-pattern>
   </filter-mapping>
   <servlet>
     <servlet-name>servlet</servlet-name>
