@@ -1,16 +1,15 @@
-package com.oauth.configuration;
+package com.oauth.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import com.oauth.utility.DBConnectionManager;
+public class UserManager {
 
-public class SecurityConfig {
-
-	public static int authenticateUser(String username, String password) {
+	public static String validateUser(String username, String password) {
 
 		Connection conn = DBConnectionManager.getDBConnection();
+		String token = null;
 		try {
 			Statement stmt = conn.createStatement();
 			String sql = "SELECT id, username, passwd FROM user_credentials WHERE username='"
@@ -18,24 +17,14 @@ public class SecurityConfig {
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				int id = rs.getInt("id");
-				return id;
+				token = TokenManager.getToken(id);
+				return token;
 			} else {
-				return 0;
+				return null;
 			}
 		} catch (Exception e) {
-			return 0;
+			return null;
 		}
-	}
 
-	public static String configureUser() {
-		return "admin";
-	}
-
-	public static String configurePassword() {
-		return "admin";
-	}
-
-	public static String configureRole() {
-		return "admin";
 	}
 }

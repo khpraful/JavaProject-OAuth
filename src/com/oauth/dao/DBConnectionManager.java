@@ -1,4 +1,4 @@
-package com.oauth.utility;
+package com.oauth.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

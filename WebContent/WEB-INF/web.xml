@@ -2,28 +2,24 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>Authentication</display-name>
   <filter>
-    <filter-name>AuthenticationFilter</filter-name>
-    <filter-class>com.oauth.filter.AuthenticationFilter</filter-class>
+    <filter-name>RequestFilter</filter-name>
+    <filter-class>com.oauth.filter.RequestFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>AuthenticationFilter</filter-name>
-    <url-pattern>/getEmployee</url-pattern>
+    <filter-name>RequestFilter</filter-name>
+    <url-pattern>/employees</url-pattern>
+    <url-pattern>/employee/*</url-pattern>
+    <url-pattern>/login</url-pattern>
   </filter-mapping>
-   <filter>
-    <filter-name>TokenFilter</filter-name>
-    <filter-class>com.oauth.filter.TokenFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>TokenFilter</filter-name>
-    <url-pattern>/getEmployee</url-pattern>
-  </filter-mapping>
-  <servlet>
+   <servlet>
     <servlet-name>servlet</servlet-name>
     <servlet-class>com.oauth.controller.FrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>servlet</servlet-name>
-    <url-pattern>/getEmployee</url-pattern>
+    <url-pattern>/employees</url-pattern>
+    <url-pattern>/employee/*</url-pattern>
+    <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

@@ -1,4 +1,4 @@
-package com.oauth.utility;
+package com.oauth.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Random;
 
-import com.oauth.utility.TokenManager;
+import com.oauth.dao.TokenManager;
 import com.mysql.jdbc.PreparedStatement;
 
 public class TokenManager {

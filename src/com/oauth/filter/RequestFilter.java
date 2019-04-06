@@ -11,15 +11,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import com.oauth.configuration.SecurityConfig;
-import com.oauth.utility.CustomRequest;
+import com.oauth.services.LoginServices;
 
 @WebFilter("/RequestFilter")
-public class AuthenticationFilter implements Filter {
+public class RequestFilter implements Filter {
 
-	FilterConfig fConfig;
-
-	public AuthenticationFilter() {
+	public RequestFilter() {
 
 	}
 
@@ -36,11 +33,10 @@ public class AuthenticationFilter implements Filter {
 
 		if (token == null) {
 			System.out.println("Token not issued yet");
-			int id = SecurityConfig.authenticateUser("admin", "admin");
-
-			if (id != 0) {
+			token = LoginServices.authenticateUser(req);
+			System.out.println("Generated Token: " + token);
+			if (token != null) {
 				CustomRequest cusReq = new CustomRequest(req);
-				cusReq.addHeader("id", Integer.toString(id));
 				cusReq.addHeader("token", token);
 				chain.doFilter(cusReq, response);
 			} else {
@@ -51,8 +47,6 @@ public class AuthenticationFilter implements Filter {
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
-
-		this.fConfig = fConfig;
 
 	}
 

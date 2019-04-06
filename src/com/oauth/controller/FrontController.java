@@ -1,69 +1,44 @@
 package com.oauth.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oauth.configuration.AuthServerConfig;
-import com.oauth.model.Employee;
-import com.oauth.utility.TokenManager;
+import com.oauth.services.EmployeeServices;
+import com.oauth.services.LoginServices;
 
-/**
- * Servlet implementation class FrontController
- */
 @WebServlet("/FrontController")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public FrontController() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
-		String token = request.getParameter("token");
+		String path = request.getServletPath();
+		System.out.println("Path: " + path);
 
-		System.out.println("Token received: " + token);
+		if (path.equalsIgnoreCase("/employees")) {
+			EmployeeServices.getEmployees(request);
 
-		if (TokenManager.isValidToken(token)
-				&& AuthServerConfig.getScope().equals("read")) {
+		} else if (path.equalsIgnoreCase("/employee")) {
+			EmployeeServices.getEmployee(request);
 
-			List<Employee> empList = EmployeeController.getEmpList();
-			for (int i = 0; i < empList.size(); i++) {
-				System.out.println(empList.get(i).getId() + " | "
-						+ empList.get(i).getName() + " | "
-						+ empList.get(i).getDept() + " | "
-						+ empList.get(i).getSalary());
-			}
-
-		} else {
-			System.out
-					.println("You are not authorized to view this information");
+		} else if (path.equalsIgnoreCase("/login")) {
+			LoginServices.authenticateUser(request);
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
